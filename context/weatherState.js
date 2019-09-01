@@ -10,16 +10,12 @@ import {
 } from './constants';
 
 // Environment variables
-let apiKey, weatherCurrent, weatherDaily;
+let apiKey;
 
 if (process.env.NODE_ENV !== 'production') {
     apiKey = process.env.REACT_APP_API;
-    weatherCurrent = process.env.REACT_APP_CURRENT;
-    weatherDaily = process.env.REACT_APP_DAILY;
 } else {
     apiKey = process.env.APP_API;
-    weatherCurrent = process.env.CURRENT;
-    weatherDaily = process.env.DAILY;
 }
 
 
