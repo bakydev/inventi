@@ -6,7 +6,7 @@ import Header from '../components/layout/header';
 import App from '../app.js';
 import About from '../components/about';
 import NotFound from '../components/notFound';
-import WeatherState from '../context/WeatherState';
+import WeatherState from '../context/weatherState';
 
 /**
  * Global styles for all components.
