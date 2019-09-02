@@ -55534,7 +55534,7 @@ var _form = _interopRequireDefault(require("./components/form"));
 
 var _weather = _interopRequireDefault(require("./components/weather"));
 
-var _styled = require("../app/components/styled");
+var _styled = require("./components/styled");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55553,7 +55553,7 @@ var App = function App() {
 
 var _default = App;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","./components/form":"components/form.js","./components/weather":"components/weather.js","../app/components/styled":"components/styled.js"}],"components/about.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./components/form":"components/form.js","./components/weather":"components/weather.js","./components/styled":"components/styled.js"}],"components/about.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -58284,7 +58284,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62305" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64579" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

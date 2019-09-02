@@ -4,7 +4,7 @@ import Weather from './components/weather';
 import {
     PageWrapper,
     Title,
-} from '../app/components/styled';
+} from './components/styled';
 
 
 /**
