@@ -7,7 +7,7 @@ import {
 
 
 /**
- * Reducer from React Context API.
+ * Reducer for React Context API.
  * 
  * @param {object} state
  * @param {object} action

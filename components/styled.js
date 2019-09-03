@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-
+// Style for Page Not Found
 const NotFoundWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -22,6 +22,7 @@ const LoaderWrapper = styled.div`
     height: 200px;
 `;
 
+// Loader style
 const Spinner = styled.div`
     display: inline-block;
     position: relative;
@@ -254,6 +255,53 @@ const WeatherElement = styled.p`
     }
 `;
 
+
+// Related forecast style
+const Related = styled.div`
+    box-shadow: 0 0 3px 1px rgba(0,0,0,0.1);
+    display: flex;
+    padding: 20px;
+`;
+
+const StyledUl = styled.ul`
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex: 1;
+`;
+
+const StyledLi = styled.li`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid #dcdcdc;
+
+    &:first-child {
+        border-left: none;
+    }
+`;
+
+const RelatedIcon = styled.div`
+    margin: 5px 0;
+
+    img {
+        width: 30px;
+        height: auto;
+    }
+`;
+
+const RelatedDate = styled.div`
+    color: #00d1b2;
+`;
+
+const RelatedTemp = styled.div`
+    color: #666;
+`;
+
+
 export {
     NotFoundWrapper,
     LoaderWrapper,
@@ -270,4 +318,10 @@ export {
     WeatherWrapper,
     WeatherElement,
     Flex,
+    Related,
+    StyledUl,
+    StyledLi,
+    RelatedIcon,
+    RelatedDate,
+    RelatedTemp,
 }

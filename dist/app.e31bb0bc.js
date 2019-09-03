@@ -55046,13 +55046,73 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Flex = exports.WeatherElement = exports.WeatherWrapper = exports.StyledError = exports.StyledButton = exports.StyledInput = exports.StyledLabel = exports.StyledForm = exports.FormikWrapper = exports.StyledP = exports.Title = exports.PageWrapper = exports.Spinner = exports.LoaderWrapper = exports.NotFoundWrapper = void 0;
+exports.RelatedTemp = exports.RelatedDate = exports.RelatedIcon = exports.StyledLi = exports.StyledUl = exports.Related = exports.Flex = exports.WeatherElement = exports.WeatherWrapper = exports.StyledError = exports.StyledButton = exports.StyledInput = exports.StyledLabel = exports.StyledForm = exports.FormikWrapper = exports.StyledP = exports.Title = exports.PageWrapper = exports.Spinner = exports.LoaderWrapper = exports.NotFoundWrapper = void 0;
 
 var _taggedTemplateLiteral2 = _interopRequireDefault(require("@babel/runtime/helpers/taggedTemplateLiteral"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject21() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n    color: #666;\n"]);
+
+  _templateObject21 = function _templateObject21() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject20() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n    color: #00d1b2;\n"]);
+
+  _templateObject20 = function _templateObject20() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject19() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n    margin: 5px 0;\n\n    img {\n        width: 30px;\n        height: auto;\n    }\n"]);
+
+  _templateObject19 = function _templateObject19() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject18() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n    display: flex;\n    flex-direction: column;\n    flex: 1;\n    justify-content: center;\n    align-items: center;\n    border-left: 1px solid #dcdcdc;\n\n    &:first-child {\n        border-left: none;\n    }\n"]);
+
+  _templateObject18 = function _templateObject18() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject17() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    display: flex;\n    flex: 1;\n"]);
+
+  _templateObject17 = function _templateObject17() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject16() {
+  var data = (0, _taggedTemplateLiteral2.default)(["\n    box-shadow: 0 0 3px 1px rgba(0,0,0,0.1);\n    display: flex;\n    padding: 20px;\n"]);
+
+  _templateObject16 = function _templateObject16() {
+    return data;
+  };
+
+  return data;
+}
 
 function _templateObject15() {
   var data = (0, _taggedTemplateLiteral2.default)(["\n    font-size: ", ";\n    color: #fff;\n    margin: ", ";\n\n    img {\n        width: 70px;\n    }\n"]);
@@ -55204,11 +55264,13 @@ function _templateObject() {
   return data;
 }
 
+// Style for Page Not Found
 var NotFoundWrapper = _styledComponents.default.div(_templateObject());
 
 exports.NotFoundWrapper = NotFoundWrapper;
 
-var LoaderWrapper = _styledComponents.default.div(_templateObject2());
+var LoaderWrapper = _styledComponents.default.div(_templateObject2()); // Loader style
+
 
 exports.LoaderWrapper = LoaderWrapper;
 
@@ -55282,9 +55344,34 @@ var WeatherElement = _styledComponents.default.p(_templateObject15(), function (
   return props.fontSize || '18px';
 }, function (props) {
   return props.margin || '0';
-});
+}); // Related forecast style
+
 
 exports.WeatherElement = WeatherElement;
+
+var Related = _styledComponents.default.div(_templateObject16());
+
+exports.Related = Related;
+
+var StyledUl = _styledComponents.default.ul(_templateObject17());
+
+exports.StyledUl = StyledUl;
+
+var StyledLi = _styledComponents.default.li(_templateObject18());
+
+exports.StyledLi = StyledLi;
+
+var RelatedIcon = _styledComponents.default.div(_templateObject19());
+
+exports.RelatedIcon = RelatedIcon;
+
+var RelatedDate = _styledComponents.default.div(_templateObject20());
+
+exports.RelatedDate = RelatedDate;
+
+var RelatedTemp = _styledComponents.default.div(_templateObject21());
+
+exports.RelatedTemp = RelatedTemp;
 },{"@babel/runtime/helpers/taggedTemplateLiteral":"node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"components/form.js":[function(require,module,exports) {
 "use strict";
 
@@ -55517,6 +55604,25 @@ var Weather = function Weather() {
       margin: "0 0 10px 0"
     }, "Sunrise: ", sunRise), _react.default.createElement(_styled.WeatherElement, null, "Sunset: ", sunSet))));
   };
+  /**
+   * Related weather.
+   * @params {object} weather
+   * 
+   * @param {*} dailyWeather 
+   */
+
+
+  var relatedWeather = function relatedWeather(weather) {
+    var dailyWeather = Object.values(weather.data).map(function (item, index) {
+      return _react.default.createElement(_styled.StyledLi, {
+        key: index
+      }, _react.default.createElement(_styled.RelatedDate, null, item.datetime), _react.default.createElement(_styled.RelatedIcon, null, _react.default.createElement("img", {
+        src: generateIcon(item.weather.icon),
+        alt: "Weather icon"
+      })), _react.default.createElement(_styled.RelatedTemp, null, item.temp));
+    });
+    return _react.default.createElement(_styled.Related, null, _react.default.createElement(_styled.StyledUl, null, dailyWeather));
+  };
 
   if (error) {
     return _react.default.createElement(_styled.StyledError, {
@@ -55524,7 +55630,7 @@ var Weather = function Weather() {
     }, "City does not exist");
   }
 
-  return _react.default.createElement("div", null, loading ? _react.default.createElement(_styled.LoaderWrapper, null, _react.default.createElement(_loader.default, null)) : _react.default.createElement(_react.default.Fragment, null, daily && daily.data && renderWeather(daily)));
+  return _react.default.createElement("div", null, loading ? _react.default.createElement(_styled.LoaderWrapper, null, _react.default.createElement(_loader.default, null)) : _react.default.createElement(_react.default.Fragment, null, daily && daily.data && renderWeather(daily), daily && daily.data && relatedWeather(daily)));
 };
 
 var _default = Weather;
@@ -57995,7 +58101,7 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /**
- * Reducer from React Context API.
+ * Reducer for React Context API.
  * 
  * @param {object} state
  * @param {object} action

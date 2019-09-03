@@ -7,6 +7,12 @@ import {
     Flex,
     WeatherElement,
     StyledError,
+    Related,
+    StyledUl,
+    StyledLi,
+    RelatedIcon,
+    RelatedDate,
+    RelatedTemp
 } from './styled';
 
 /**
@@ -119,6 +125,30 @@ const Weather = () => {
         )
     }
 
+    /**
+     * Related weather.
+     * @params {object} weather
+     * 
+     * @param {*} dailyWeather 
+     */
+    const relatedWeather = (weather) => {
+        const dailyWeather = Object.values(weather.data).map((item, index) => (
+            <StyledLi key={index}>
+                <RelatedDate>{item.datetime}</RelatedDate>
+                <RelatedIcon><img src={generateIcon(item.weather.icon)} alt='Weather icon' /></RelatedIcon>
+                <RelatedTemp>{item.temp}</RelatedTemp>
+            </StyledLi>
+        ));
+
+        return (
+            <Related>
+                <StyledUl>
+                    {dailyWeather}    
+                </StyledUl>
+            </Related>
+        );
+    }
+
     if (error) {
         return (
             <StyledError padding='0 60px'>City does not exist</StyledError>
@@ -133,6 +163,7 @@ const Weather = () => {
                 </LoaderWrapper>
                 ) : (<>
                         {daily && daily.data && renderWeather(daily)}
+                        {daily && daily.data && relatedWeather(daily)}
                     </>
                 )
             }
