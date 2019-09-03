@@ -221,6 +221,7 @@ const StyledError = styled.div`
     justify-content: center;
     align-items: center;
     margin: 10px 0 0 0;
+    padding: ${props => props.padding || '0'};
 `;
 
 

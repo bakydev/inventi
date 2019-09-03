@@ -55085,7 +55085,7 @@ function _templateObject13() {
 }
 
 function _templateObject12() {
-  var data = (0, _taggedTemplateLiteral2.default)(["\n    background-color: rgba(222, 93, 93, 0.1);\n    color: #de5d5d;\n    font-size: 18px;\n    height: 50px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin: 10px 0 0 0;\n"]);
+  var data = (0, _taggedTemplateLiteral2.default)(["\n    background-color: rgba(222, 93, 93, 0.1);\n    color: #de5d5d;\n    font-size: 18px;\n    height: 50px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin: 10px 0 0 0;\n    padding: ", ";\n"]);
 
   _templateObject12 = function _templateObject12() {
     return data;
@@ -55255,7 +55255,9 @@ var StyledButton = _styledComponents.default.button(_templateObject11());
 
 exports.StyledButton = StyledButton;
 
-var StyledError = _styledComponents.default.div(_templateObject12()); // Weather style
+var StyledError = _styledComponents.default.div(_templateObject12(), function (props) {
+  return props.padding || '0';
+}); // Weather style
 
 
 exports.StyledError = StyledError;
@@ -55428,7 +55430,8 @@ var Weather = function Weather() {
   var weatherContext = (0, _react.useContext)(_weatherContext.default); // Weather state
 
   var loading = weatherContext.loading,
-      daily = weatherContext.daily;
+      daily = weatherContext.daily,
+      error = weatherContext.error;
   /**
    * Get time.
    * 
@@ -55515,7 +55518,13 @@ var Weather = function Weather() {
     }, "Sunrise: ", sunRise), _react.default.createElement(_styled.WeatherElement, null, "Sunset: ", sunSet))));
   };
 
-  return _react.default.createElement("div", null, loading ? _react.default.createElement(_styled.LoaderWrapper, null, _react.default.createElement(_loader.default, null)) : _react.default.createElement(_react.default.Fragment, null, daily && daily.data ? renderWeather(daily) : null));
+  if (error) {
+    return _react.default.createElement(_styled.StyledError, {
+      padding: "0 60px"
+    }, "City does not exist");
+  }
+
+  return _react.default.createElement("div", null, loading ? _react.default.createElement(_styled.LoaderWrapper, null, _react.default.createElement(_loader.default, null)) : _react.default.createElement(_react.default.Fragment, null, daily && daily.data && renderWeather(daily)));
 };
 
 var _default = Weather;
@@ -57958,13 +57967,15 @@ module.exports = _defineProperty;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SET_LOADING = exports.GET_DAYLI_WEATHER = exports.GET_CURRENT_WEATHER = void 0;
+exports.GET_DAILY_WEATHER_NO_CONTENT = exports.SET_LOADING = exports.GET_DAYLI_WEATHER = exports.GET_CURRENT_WEATHER = void 0;
 var GET_CURRENT_WEATHER = 'GET_CURRENT_WEATHER';
 exports.GET_CURRENT_WEATHER = GET_CURRENT_WEATHER;
 var GET_DAYLI_WEATHER = 'GET_DAYLI_WEATHER';
 exports.GET_DAYLI_WEATHER = GET_DAYLI_WEATHER;
 var SET_LOADING = 'SET_LOADING';
 exports.SET_LOADING = SET_LOADING;
+var GET_DAILY_WEATHER_NO_CONTENT = 'GET_DAILY_WEATHER_NO_CONTENT';
+exports.GET_DAILY_WEATHER_NO_CONTENT = GET_DAILY_WEATHER_NO_CONTENT;
 },{}],"context/weatherReducer.js":[function(require,module,exports) {
 "use strict";
 
@@ -58006,6 +58017,13 @@ var _default = function _default(state, action) {
     case _constants.GET_DAILY_WEATHER:
       return _objectSpread({}, state, {
         daily: action.payload,
+        error: false,
+        loading: false
+      });
+
+    case _constants.GET_DAILY_WEATHER_NO_CONTENT:
+      return _objectSpread({}, state, {
+        error: action.payload,
         loading: false
       });
 
@@ -58141,10 +58159,18 @@ var WeatherState = function WeatherState(props) {
 
             case 3:
               res = _context2.sent;
-              dispatch({
-                type: _constants.GET_DAILY_WEATHER,
-                payload: res.data
-              });
+
+              if (res.status === 204) {
+                dispatch({
+                  type: _constants.GET_DAILY_WEATHER_NO_CONTENT,
+                  payload: true
+                });
+              } else {
+                dispatch({
+                  type: _constants.GET_DAILY_WEATHER,
+                  payload: res.data
+                });
+              }
 
             case 5:
             case "end":
@@ -58164,6 +58190,7 @@ var WeatherState = function WeatherState(props) {
       current: state.current,
       daily: state.daily,
       loading: state.loading,
+      error: state.error,
       getCurrentWeather: getCurrentWeather,
       getDailyWeather: getDailyWeather
     }
@@ -58284,7 +58311,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64579" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64836" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

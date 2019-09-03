@@ -6,6 +6,7 @@ import {
     WeatherWrapper,
     Flex,
     WeatherElement,
+    StyledError,
 } from './styled';
 
 /**
@@ -19,7 +20,7 @@ const Weather = () => {
     const weatherContext = useContext(WeatherContext);
 
     // Weather state
-    const {loading, daily} = weatherContext;
+    const {loading, daily, error} = weatherContext;
     
     /**
      * Get time.
@@ -117,6 +118,12 @@ const Weather = () => {
             </WeatherWrapper>
         )
     }
+
+    if (error) {
+        return (
+            <StyledError padding='0 60px'>City does not exist</StyledError>
+        );
+    }
     
     return (
         <div>
@@ -125,7 +132,7 @@ const Weather = () => {
                     <Loader />
                 </LoaderWrapper>
                 ) : (<>
-                        {daily && daily.data ? renderWeather(daily) : null}
+                        {daily && daily.data && renderWeather(daily)}
                     </>
                 )
             }

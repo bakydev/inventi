@@ -2,6 +2,7 @@ import {
     GET_CURRENT_WEATHER,
     GET_DAILY_WEATHER,
     SET_LOADING,
+    GET_DAILY_WEATHER_NO_CONTENT,
 } from './constants';
 
 
@@ -29,7 +30,14 @@ export default (state, action) => {
             return {
                 ...state,
                 daily: action.payload,
+                error: false,
                 loading: false
+            }
+        case GET_DAILY_WEATHER_NO_CONTENT:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
             }
         default:
             return state;

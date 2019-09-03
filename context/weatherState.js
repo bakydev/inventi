@@ -7,6 +7,7 @@ import {
     SET_LOADING,
     GET_CURRENT_WEATHER,
     GET_DAILY_WEATHER,
+    GET_DAILY_WEATHER_NO_CONTENT,
 } from './constants';
 
 // Environment variables
@@ -60,10 +61,17 @@ const WeatherState = props => {
 
         const res = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?key=${apiKey}&days=7&city=${query}`);
 
-        dispatch({
-            type: GET_DAILY_WEATHER,
-            payload: res.data
-        });
+        if (res.status === 204) {
+            dispatch({
+                type: GET_DAILY_WEATHER_NO_CONTENT,
+                payload: true,
+            })
+        } else {
+            dispatch({
+                type: GET_DAILY_WEATHER,
+                payload: res.data,
+            });
+        }
     }
 
     return <WeatherContext.Provider
@@ -71,6 +79,7 @@ const WeatherState = props => {
             current: state.current,
             daily: state.daily,
             loading: state.loading,
+            error: state.error,
             getCurrentWeather,
             getDailyWeather,
         }}
